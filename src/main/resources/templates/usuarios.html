@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <title>Inicio</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">App Inventario</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Inicio <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <div class="container text-center">
+        <div>
+            <h1>Lista de Usuarios</h1>
+        </div>
+        <hr>
+        <table class="table table-striped table-dark table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">EMAIL</th>
+                    <th scope="col">ROLES</th>
+                    <th scope="col">ACCIONES</th>
+               
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="usuarios : ${listaUsuarios}">
+
+                    <td th:text="${usuarios.id}"></td>
+                    <td th:text="${usuarios.email}"></td>
+                    <td th:text="${usuarios.roles}"></td>
+                    <td>
+                        <a th:href="@{'/usuarios/editar' + '/' + ${usuarios.id}}" class="btn btn-warning">Editar</a>  &nbsp; &nbsp;
+                        <a th:href="@{'/usuarios/eliminar' + '/' + ${usuarios.id}}" class="btn btn-danger">Eliminar</a>
+                      
+                    </td>
+                 
+
+                </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <title>Inicio</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">App Inventario</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Inicio <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <div class="container text-center">
+        <div>
+            <h1 th:if="${producto.id == null }">Registro de Productos</h1>
+            <h1 th:unless="${producto.id == null }">Editar Producto</h1>
+        </div>
+        <hr>
+        <form th:action="@{/productos/guardar}" method="post" th:object="${producto}"
+            style="max-width: 600px; margin: 0 auto;">
+
+            <input type="hidden" th:field="*{id}" th:value="${producto.id}" />
+            <div class="m-3">
+
+
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-4">Nombre de Producto : </label>
+                    <div class="col-sm-8">
+                        <input type="text" th:field="*{nombre}" class="form-control" required>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-4">Precio de Producto : </label>
+                    <div class="col-sm-8">
+                        <input type="number" th:field="*{precio}" class="form-control" required>
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-4">Categoria : </label>
+                    <div class="col-sm-8">
+                        <select th:field="*{categoria}" class="form-control" required>
+                            <th:block th:each="categoria : ${listaCategorias}">
+                                <option th:text="${categoria.nombre}" th:value="${categoria.id}">
+
+                                </option>
+                            </th:block>
+                        </select>
+                    </div>
+
+                </div>
+
+                <th:block th:unless="${producto.id == null}" th:each="detalle,status : ${producto.detalles}">
+                    <input type="hidden" name="detalleID" th:value="${detalle.id}">
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-4">Detalles #[[${status.count}]] : </label>
+
+                        <div class="col-sm-4">
+                            <input type="text" name="detallesNombre" th:value="${detalle.nombre}" class="form-control"
+                                required>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <input type="text" name="detallesValor" th:value="${detalle.valor}" class="form-control"
+                                required>
+                        </div>
+
+                    </div>
+                </th:block>
+
+                <th:block th:if="${producto.id == null}">
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-4">Detalles #1: </label>
+
+                        <div class="col-sm-4">
+                            <input type="text" name="detallesNombre" class="form-control"
+                                required placeholder="Nombre">
+                        </div>
+
+                        <div class="col-sm-4">
+                            <input type="text" name="detallesValor"  class="form-control"
+                                required placeholder="Valor">
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-4">Detalles #2: </label>
+
+                        <div class="col-sm-4">
+                            <input type="text" name="detallesNombre" class="form-control"
+                                required placeholder="Nombre">
+                        </div>
+
+                        <div class="col-sm-4">
+                            <input type="text" name="detallesValor"  class="form-control"
+                                required placeholder="Valor">
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-4">Detalles #3: </label>
+
+                        <div class="col-sm-4">
+                            <input type="text" name="detallesNombre" class="form-control"
+                                required placeholder="Nombre">
+                        </div>
+
+                        <div class="col-sm-4">
+                            <input type="text" name="detallesValor"  class="form-control"
+                                required placeholder="Valor">
+                        </div>
+
+                    </div>
+
+
+                </th:block>
+
+
+                <div class="text-center p">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+
+</body>
+
+</html>
